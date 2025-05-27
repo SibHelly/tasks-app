@@ -1,0 +1,337 @@
+.create-chat-modal {
+  background-color: #ffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.chat-list-modal {
+  background-color: #ffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  min-width: 400px;
+}
+
+.chat-modal {
+  background-color: #ffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  min-width: 600px;
+  min-height: 500px;
+}
+
+.create-button {
+  display: flex;
+  align-items: center;
+  background-color: #0d6efd;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 6px 12px;
+  font-size: 14px;
+  font-weight: 400;
+  cursor: pointer;
+  height: 32px;
+  white-space: nowrap;
+  transition: background-color 0.2s;
+  margin-top: 0px;
+  width: auto;
+}
+
+.cancel-button-1 {
+  display: flex;
+  align-items: center;
+  background-color: #1f1b1b1b;
+  color: black;
+  border: none;
+  border-radius: 4px;
+  padding: 6px 12px;
+  font-size: 14px;
+  font-weight: 400;
+  cursor: pointer;
+  height: 32px;
+  white-space: nowrap;
+  transition: background-color 0.2s;
+  margin-top: 0px;
+  width: auto;
+  margin-right: 5px;
+}
+
+.cancel-button-1:hover {
+  color: white;
+}
+
+.chat-name-input-1 {
+  width: 80%;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-family: "Roboto", sans-serif;
+  margin-top: 5px;
+}
+
+.form-group-1 {
+  width: 100%;
+}
+
+.empty-list-1 {
+  padding: 24px;
+  text-align: center;
+  color: #757575;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+}
+
+/* ChatModal.css */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.chat-content-1 {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-wrap: nowrap;
+  flex-direction: column;
+  min-height: 500px;
+}
+
+.chat-modal {
+  position: relative;
+  background-color: #ffffff;
+  padding: 24px;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  max-width: 800px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  font-family: "Roboto", sans-serif;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding-bottom: 16px;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.modal-header h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  color: #212529;
+}
+
+.header-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.delete-chat-button {
+  margin-top: 0px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #dc3545;
+  padding: 4px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.delete-chat-button:hover {
+  background-color: rgba(220, 53, 69, 0.1);
+}
+
+.delete-chat-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.close-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #0d6efd;
+  padding: 4px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.close-button:hover {
+  background-color: rgba(13, 110, 253, 0.1);
+}
+
+.chat-content {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.messages-container {
+  flex-grow: 1;
+  overflow-y: auto;
+  margin-bottom: 16px;
+  max-height: 400px;
+  padding-right: 8px;
+}
+
+.message {
+  padding: 12px;
+  border-radius: 8px;
+  background-color: #f8f9fa;
+  margin-bottom: 8px;
+  display: flex;
+  flex-direction: column;
+}
+
+.message-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 4px;
+  font-size: 0.875rem;
+}
+
+.message-sender {
+  font-weight: 500;
+  color: #495057;
+}
+
+.message-time {
+  color: #6c757d;
+  font-size: 0.75rem;
+}
+
+.message-text {
+  margin: 0;
+  font-size: 1rem;
+  color: #212529;
+  word-break: break-word;
+}
+
+.message-input-container {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.message-input-container input {
+  flex-grow: 1;
+  padding: 10px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-family: "Roboto", sans-serif;
+  min-width: 500px;
+}
+
+.message-input-container input:focus {
+  outline: none;
+  border-color: #86b7fe;
+  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+.send-button {
+  margin-top: 0px;
+  background-color: #0d6efd;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+.send-button:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.send-button:hover:not(:disabled) {
+  background-color: #0b5ed7;
+}
+
+.modal-loading,
+.modal-error {
+  background-color: white;
+  padding: 24px;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  font-family: "Roboto", sans-serif;
+  max-width: 400px;
+  width: 80%;
+  text-align: center;
+}
+
+.modal-error {
+  color: #dc3545;
+}
+
+.modal-header-1 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  border-bottom: 1px solid #eee;
+  font-family: "Roboto", sans-serif;
+}
+
+/* Add these styles to ChatModal.css */
+.messages-container {
+  width: 100%;
+}
+
+.message {
+  position: relative;
+  padding-right: 40px; /* Space for delete button */
+}
+
+.delete-comment-button {
+  position: absolute;
+  right: 8px;
+  top: 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #dc3545;
+  padding: 2px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  margin-top: 3px;
+}
+
+.delete-comment-button:hover {
+  background-color: rgba(220, 53, 69, 0.1);
+}
+
+.delete-comment-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.msg {
+  display: flex;
+  flex-direction: row;
+}

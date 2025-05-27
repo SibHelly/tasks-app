@@ -1,0 +1,37 @@
+.layout-container {
+  display: flex;
+  min-height: 100vh;
+  margin: 0;
+}
+
+.sidebar-wrapper {
+  width: 276px;
+  background: #ffffff;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: hidden;
+}
+
+.content-wrapper {
+  flex: 1;
+  overflow-x: hidden;
+}
+
+/* Опциональные стили для скроллбара */
+.sidebar-wrapper::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sidebar-wrapper::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.sidebar-wrapper::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+}
+
+.sidebar-wrapper::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.3);
+}

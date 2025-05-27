@@ -1,0 +1,94 @@
+.header {
+  margin-left: 30px;
+  font-family: Roboto, sans-serif;
+}
+
+h3 {
+  font-size: 24px;
+  margin-bottom: 8px;
+}
+
+.header-list {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  /* direction: row; */
+  max-width: 1200px;
+  margin-left: 30px;
+  font-family: "Roboto", sans-serif;
+}
+
+.action-btn {
+  margin-top: 16px;
+  margin-bottom: 8px;
+  padding: 8px 16px;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  float: left;
+  font-family: "Roboto", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.add-subtask-btn {
+  background-color: #0d6efd;
+  width: auto;
+}
+
+.board {
+  padding: 30px;
+}
+
+.action-btn {
+  width: auto;
+  margin-right: 10px;
+}
+
+.btns {
+  display: flex;
+}
+
+.help-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #666;
+  padding: 5px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+}
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  width: 1200px;
+}
+
+.help-btn:hover {
+  background-color: #f0f0f0;
+}
+
+.modal-overlay-1 {
+  width: 100%;
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+}
+
+.modal-content-1 {
+  background-color: rgba(255, 255, 255, 0);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}

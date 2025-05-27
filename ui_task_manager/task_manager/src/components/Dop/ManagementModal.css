@@ -1,0 +1,325 @@
+.management-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  font-family: "Roboto", sans-serif;
+}
+
+.management-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+  font-family: "Roboto", sans-serif;
+}
+
+.add-button {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 8px 12px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 200px;
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+}
+
+.add-button:hover {
+  background-color: #45a049;
+}
+
+.management-list {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  overflow: hidden;
+  font-family: "Roboto", sans-serif;
+}
+
+.management-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 15px;
+  border-bottom: 1px solid #eee;
+  font-family: "Roboto", sans-serif;
+}
+
+.management-item:last-child {
+  border-bottom: none;
+}
+
+.item-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: "Roboto", sans-serif;
+}
+
+.item-info span {
+  font-family: "Roboto", sans-serif;
+}
+
+.color-badge {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border-radius: 3px;
+  border: 1px solid #ddd;
+}
+
+.item-actions {
+  display: flex;
+  gap: 8px;
+  font-family: "Roboto", sans-serif;
+}
+
+.edit-btn1,
+.delete-btn1 {
+  padding: 5px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  border-radius: 3px;
+  font-family: "Roboto", sans-serif;
+}
+
+.edit-btn1 {
+  color: #2196f3;
+}
+
+.edit-btn1:hover {
+  background-color: #e3f2fd;
+}
+
+.delete-btn1 {
+  color: #f44336;
+}
+
+.delete-btn1:hover {
+  background-color: #ffebee;
+}
+
+/* Modal styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  font-family: "Roboto", sans-serif;
+}
+
+.management-modal {
+  background-color: white;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 500px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  font-family: "Roboto", sans-serif;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  border-bottom: 1px solid #eee;
+  font-family: "Roboto", sans-serif;
+}
+
+.modal-header h2 {
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+}
+
+.close-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #666;
+  font-family: "Roboto", sans-serif;
+}
+
+.modal-content {
+  padding: 20px;
+  font-family: "Roboto", sans-serif;
+}
+
+.form-group {
+  margin-bottom: 15px;
+  font-family: "Roboto", sans-serif;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+  font-family: "Roboto", sans-serif;
+}
+
+.edit-input,
+.edit-select,
+.edit-textarea {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  font-family: "Roboto", sans-serif;
+}
+
+.error-input {
+  border-color: #f44336;
+}
+
+.error-message {
+  color: #f44336;
+  margin-bottom: 15px;
+  padding: 10px;
+  background-color: #ffebee;
+  border-radius: 4px;
+  font-family: "Roboto", sans-serif;
+}
+
+.modal-footer {
+  padding: 15px 20px;
+  border-top: 1px solid #eee;
+  display: flex;
+  justify-content: flex-end;
+  font-family: "Roboto", sans-serif;
+}
+
+.action-btn1 {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  font-family: "Roboto", sans-serif;
+}
+
+.save-btn1 {
+  background-color: #4caf50;
+  color: white;
+}
+
+.save-btn1:hover {
+  background-color: #45a049;
+}
+
+.save-btn1:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.color-picker {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: "Roboto", sans-serif;
+}
+
+.color-picker input[type="color"] {
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* Добавьте эти стили в ManagementModal.css */
+
+.inline-edit {
+  padding: 6px 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  width: 200px;
+  margin-right: 10px;
+}
+
+.cancel-btn {
+  padding: 5px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  border-radius: 3px;
+  color: #666;
+}
+
+.cancel-btn:hover {
+  background-color: #f5f5f5;
+}
+
+.save-btn11 {
+  padding: 5px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  border-radius: 3px;
+  color: #4caf50;
+}
+
+.save-btn1:hover {
+  background-color: #e8f5e9;
+}
+
+.save-btn1:disabled {
+  color: #cccccc;
+  cursor: not-allowed;
+}
+
+.management-item {
+  transition: all 0.3s ease;
+}
+
+.item-actions {
+  min-width: 100px;
+}
+
+.error-banner {
+  background-color: #ffe6e6;
+  border-left: 4px solid #ff4d4d;
+  color: #d32f2f;
+  padding: 10px 15px;
+  margin-bottom: 15px;
+  border-radius: 4px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  font-family: Roboto, sans-serif;
+}
+
+.error-banner::before {
+  content: "⚠️";
+  margin-right: 8px;
+  font-size: 16px;
+}
+
+.error-message {
+  color: #d32f2f;
+  background-color: #ffe6e6;
+  padding: 8px 12px;
+  border-radius: 4px;
+  margin-bottom: 15px;
+  font-size: 14px;
+}
+
+/* Optional: Add this if you want to highlight fields with errors */
+.error-input {
+  border-color: #ff4d4d !important;
+  background-color: #ffe6e6 !important;
+}
