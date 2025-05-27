@@ -1,0 +1,4 @@
+CREATE TABLE IF NOT EXISTS `status_map` (
+    `status_id` INT PRIMARY KEY AUTO_INCREMENT,
+    `status` VARCHAR(100) NOT NULL
+);
