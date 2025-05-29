@@ -4,7 +4,12 @@ import { Calendar, X, ChevronDown } from "lucide-react";
 import api from "../../api/api";
 import "./TaskFilter.css";
 
-export default function TaskFilter({ tasks = [], onFilterChange, onClose }) {
+export default function TaskFilter({
+  tasks = [],
+  onFilterChange,
+  onClose,
+  flag = false,
+}) {
   const [categories, setCategories] = useState([]);
   const [groups, setGroups] = useState([]);
   const [priorities, setPriorities] = useState([]);
@@ -362,34 +367,36 @@ export default function TaskFilter({ tasks = [], onFilterChange, onClose }) {
 
         <div className="modal-filter-divider"></div>
 
-        <div className="modal-filter-section">
-          <h3 className="modal-filter-section-title">Parent Task</h3>
-          <div className="modal-filter-select-wrapper">
-            <select
-              value={selectedParentTask ? selectedParentTask.task_id : ""}
-              onChange={(e) => {
-                const taskId = parseInt(e.target.value);
-                if (taskId) {
-                  const task = parentTasks.find((t) => t.task_id === taskId);
-                  setSelectedParentTask(task);
-                } else {
-                  setSelectedParentTask(null);
-                }
-              }}
-              className="modal-filter-select"
-            >
-              <option value="">Select parent task</option>
-              {parentTasks.map((task) => (
-                <option key={task.task_id} value={task.task_id}>
-                  {task.task_name}
-                </option>
-              ))}
-            </select>
-            <div className="modal-filter-select-icon">
-              <ChevronDown size={14} />
+        {flag === false && (
+          <div className="modal-filter-section">
+            <h3 className="modal-filter-section-title">Parent Task</h3>
+            <div className="modal-filter-select-wrapper">
+              <select
+                value={selectedParentTask ? selectedParentTask.task_id : ""}
+                onChange={(e) => {
+                  const taskId = parseInt(e.target.value);
+                  if (taskId) {
+                    const task = parentTasks.find((t) => t.task_id === taskId);
+                    setSelectedParentTask(task);
+                  } else {
+                    setSelectedParentTask(null);
+                  }
+                }}
+                className="modal-filter-select"
+              >
+                <option value="">Select parent task</option>
+                {parentTasks.map((task) => (
+                  <option key={task.task_id} value={task.task_id}>
+                    {task.task_name}
+                  </option>
+                ))}
+              </select>
+              <div className="modal-filter-select-icon">
+                <ChevronDown size={14} />
+              </div>
             </div>
           </div>
-        </div>
+        )}
 
         <div className="modal-filter-divider"></div>
 

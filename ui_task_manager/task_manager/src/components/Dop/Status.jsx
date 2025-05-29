@@ -31,7 +31,7 @@ const StatusList = () => {
 
   const handleDelete = async (statusId) => {
     try {
-      await api.delete(`/statuses/delete/${statusId}`);
+      await api.delete(`/statuses/${statusId}`);
       fetchStatuses();
       setError(null); // Clear error on success
     } catch (err) {

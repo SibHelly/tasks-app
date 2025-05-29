@@ -7,10 +7,11 @@ import {
   FaClipboard,
   FaTags,
   FaUsers,
-  // FaChartBar,
-  // FaUser,
+  FaChartBar,
+  FaUser,
   // FaBell,
   FaSignOutAlt,
+  FaInfo,
 } from "react-icons/fa";
 import { useAuth } from "../context/AuthProvider"; // Adjust the import path as needed
 
@@ -63,24 +64,24 @@ const Sidebar = () => {
               <span>Groups</span>
             </NavLink>
           </li>
-          {/* <li className="sidebar-menu-item">
+          <li className="sidebar-menu-item">
             <NavLink to="/analytics" className="sidebar-menu-link">
               <FaChartBar className="sidebar-icon" />
               <span>Analytics</span>
             </NavLink>
-          </li> */}
+          </li>
         </ul>
       </nav>
 
       <div className="sidebar-bottom-menu">
         <ul className="sidebar-menu-list">
-          {/* <li className="sidebar-menu-item">
+          <li className="sidebar-menu-item">
             <NavLink to="/profile" className="sidebar-menu-link">
               <FaUser className="sidebar-icon" />
               <span>Profile</span>
             </NavLink>
           </li>
-          <li className="sidebar-menu-item">
+          {/* <li className="sidebar-menu-item">
             <NavLink to="/notifications" className="sidebar-menu-link">
               <FaBell className="sidebar-icon" />
               <span>Notifications</span>
@@ -95,6 +96,12 @@ const Sidebar = () => {
               <FaSignOutAlt className="sidebar-icon" />
               <span>Logout</span>
             </button>
+          </li>
+          <li className="sidebar-menu-item">
+            <NavLink to="/about" className="sidebar-menu-link">
+              <FaInfo className="sidebar-icon" />
+              <span>About us</span>
+            </NavLink>
           </li>
         </ul>
       </div>

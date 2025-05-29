@@ -191,18 +191,6 @@ const TaskList = ({
           onClick: () => handleFinishTask(task.task_id),
         },
       ];
-      return baseActions;
-    } else {
-      const baseActions = [
-        {
-          label: "Finish",
-          onClick: () => handleFinishTask(task.task_id),
-        },
-        {
-          label: "Delete",
-          onClick: () => handleDeleteTask(task.task_id),
-        },
-      ];
       if (!isSubtask) {
         baseActions.splice(1, 0, {
           label: "Add Subtask",
@@ -210,6 +198,40 @@ const TaskList = ({
         });
       }
       return baseActions;
+    } else {
+      if (task.groupId !== 0) {
+        const baseActions = [
+          {
+            label: "Finish",
+            onClick: () => handleFinishTask(task.task_id),
+          },
+        ];
+        if (!isSubtask) {
+          baseActions.splice(1, 0, {
+            label: "Add Subtask",
+            onClick: () => handleAddSubtask(task.task_id),
+          });
+        }
+        return baseActions;
+      } else {
+        const baseActions = [
+          {
+            label: "Finish",
+            onClick: () => handleFinishTask(task.task_id),
+          },
+          {
+            label: "Delete",
+            onClick: () => handleDeleteTask(task.task_id),
+          },
+        ];
+        if (!isSubtask) {
+          baseActions.splice(1, 0, {
+            label: "Add Subtask",
+            onClick: () => handleAddSubtask(task.task_id),
+          });
+        }
+        return baseActions;
+      }
     }
   };
 
@@ -259,7 +281,7 @@ const TaskList = ({
                   {getPriorityText(task.priority_id)}
                 </div>
                 <div className="task-deadline">{formatDate(task.end_time)}</div>
-                <div className="task-actions"> 
+                <div className="task-actions">
                   <button
                     className="info-button"
                     onClick={() => handleTaskInfo(task.task_id)}
@@ -303,7 +325,7 @@ const TaskList = ({
                     <span>{subtask.task_name}</span>
                   </div>
                   <div className="info">
-                    <div className="task-status">
+                    <div className="task-status-1">
                       {getStatusText(subtask.status_id)}
                     </div>
                     <div

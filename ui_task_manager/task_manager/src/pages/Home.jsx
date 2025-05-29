@@ -2,7 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import api from "../api/api";
 import "./Home.css";
-import { Plus, Info } from "lucide-react";
+import { Plus, Info, Clock } from "lucide-react";
 import TaskList from "../components/Lists/TaskList";
 import TaskModal from "../components/Modals/TaskModal";
 import SubtaskModal from "../components/Modals/SubtaskModal";
@@ -21,6 +21,12 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [showHelp, setShowHelp] = useState(false);
+
+  // Clock and emoji state
+  const [currentTime, setCurrentTime] = useState(new Date());
+  const [randomEmoji, setRandomEmoji] = useState("😀");
+  // eslint-disable-next-line no-unused-vars
+  const [timeZone, setTimeZone] = useState("UTC");
 
   // State for handling modal display
   const [selectedTaskId, setSelectedTaskId] = useState(null);
@@ -42,6 +48,68 @@ export default function Home() {
   const [categories, setCategories] = useState([]);
   const [selectedCategoryId, setSelectedCategoryId] = useState(null);
   const [addCategory, setAddCategory] = useState(false);
+
+  const emojis = [
+    "😀",
+    "😊",
+    "😎",
+    "🚀",
+    "⭐",
+    "🎯",
+    "💡",
+    "🎉",
+    "👍",
+    "🔥",
+    "💪",
+    "🌟",
+    "🎨",
+    "🎭",
+    "🎪",
+    "🌈",
+  ];
+
+  const fetchCurrentTime = async () => {
+    try {
+      const response = await fetch(
+        "https://worldtimeapi.org/api/timezone/Europe/Helsinki"
+      );
+      const data = await response.json();
+      setCurrentTime(new Date(data.datetime));
+      setTimeZone(data.timezone);
+    } catch (error) {
+      console.error("Error fetching time:", error);
+      setCurrentTime(new Date());
+    }
+  };
+
+  const generateRandomEmoji = () => {
+    const randomIndex = Math.floor(Math.random() * emojis.length);
+    setRandomEmoji(emojis[randomIndex]);
+  };
+
+  useEffect(() => {
+    fetchCurrentTime();
+    generateRandomEmoji();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  // Update time every second
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentTime((prevTime) => new Date(prevTime.getTime() + 1000));
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
+
+  // Generate random emoji every 30 seconds
+  useEffect(() => {
+    const emojiTimer = setInterval(() => {
+      generateRandomEmoji();
+    }, 30000);
+
+    return () => clearInterval(emojiTimer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const fetchTasks = async () => {
     try {
@@ -211,6 +279,24 @@ export default function Home() {
     await fetchCategories();
   };
 
+  const formatTime = (date) => {
+    return date.toLocaleTimeString("en-US", {
+      hour12: false,
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+    });
+  };
+
+  const formatDate = (date) => {
+    return date.toLocaleDateString("en-US", {
+      weekday: "short",
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    });
+  };
+
   const helpItems = [
     {
       title: "Task Management",
@@ -227,11 +313,6 @@ export default function Home() {
       content:
         "Groups enable collaboration by: \n- Creating project-based task groups \n- Managing group members \n- Tracking group progress \n- Centralizing group communications",
     },
-    // {
-    //   title: "Quick Actions",
-    //   content:
-    //     "Use keyboard shortcuts for faster access: \n- Ctrl+T: New task \n- Ctrl+G: New group \n- Ctrl+C: New category \n- Ctrl+S: Save current task",
-    // },
   ];
 
   return (
@@ -239,9 +320,53 @@ export default function Home() {
       <div className="tasks-container">
         <div className="header-container">
           <h1 className="header">Welcome to Task Manager</h1>
-          <button className="help-btn" onClick={() => setShowHelp(true)}>
-            <Info size={20} />
-          </button>
+          <div style={{ display: "flex", alignItems: "center", gap: "15px" }}>
+            {/* Clock and Emoji Section */}
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "10px",
+                padding: "8px 12px",
+                backgroundColor: "#f5f5f5",
+                borderRadius: "8px",
+                fontSize: "14px",
+                color: "#333",
+              }}
+            >
+              <Clock size={16} />
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                }}
+              >
+                <span style={{ fontWeight: "bold" }}>
+                  {formatTime(currentTime)}
+                </span>
+                <span style={{ fontSize: "12px", color: "#666" }}>
+                  {formatDate(currentTime)}
+                </span>
+              </div>
+              <span
+                style={{
+                  fontSize: "20px",
+                  cursor: "pointer",
+                  transition: "transform 0.2s",
+                  userSelect: "none",
+                }}
+                onClick={generateRandomEmoji}
+                title="Click for new emoji!"
+              >
+                {randomEmoji}
+              </span>
+            </div>
+
+            <button className="help-btn" onClick={() => setShowHelp(true)}>
+              <Info size={20} />
+            </button>
+          </div>
         </div>
 
         <div className="header-list">

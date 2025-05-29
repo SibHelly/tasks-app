@@ -2,17 +2,23 @@ import React from "react";
 import { useState, useEffect } from "react";
 import api from "../api/api";
 import "./Home.css";
-import { Plus } from "lucide-react";
+import { Filter, Plus } from "lucide-react";
 import TaskList from "../components/Lists/TaskList";
 import TaskModal from "../components/Modals/TaskModal";
 import SubtaskModal from "../components/Modals/SubtaskModal";
 import CreateTaskModal from "../components/Modals/CreateTaskModal";
 import CreateSubtaskModal from "../components/Modals/CreateSubtaskModal";
+import TaskFilter from "../components/Dop/TaskFilter";
 
 export default function ListPage() {
   const [tasks, setTasks] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [filteredTasks, setFilteredTasks] = useState([]);
+  const [showFilterModal, setShowFilterModal] = useState(false);
+  // Новая переменная для сохранения примененного фильтра
+  // eslint-disable-next-line no-unused-vars
+  const [activeFilterCriteria, setActiveFilterCriteria] = useState(null);
 
   // State for handling modal display
   const [selectedTaskId, setSelectedTaskId] = useState(null);
@@ -24,6 +30,8 @@ export default function ListPage() {
   const [addTask, setAddTask] = useState(false);
   const [addSubtask, setAddSubtask] = useState(false);
   const [addSubtaskFromDD, setAddSubtaskFromDD] = useState(false);
+  // eslint-disable-next-line no-unused-vars
+  const [lastAppliedFilter, setLastAppliedFilter] = useState(null);
 
   const fetchTasks = async () => {
     try {
@@ -31,7 +39,16 @@ export default function ListPage() {
       const token = localStorage.getItem("token");
       if (token) {
         const response = await api.get("/tasks");
-        setTasks(response.data.tasks);
+        const allTasks = response.data.tasks;
+        setTasks(allTasks);
+
+        // Применяем тот же фильтр к обновленным задачам, если он существует
+        if (activeFilterCriteria) {
+          applyFilterCriteria(allTasks, activeFilterCriteria);
+        } else {
+          setFilteredTasks(allTasks);
+        }
+
         // Clear the update flag after fetching
         if (localStorage.getItem("update") === "yes") {
           localStorage.removeItem("update");
@@ -45,6 +62,79 @@ export default function ListPage() {
     }
   };
 
+  // Новая функция для применения критериев фильтра
+  const applyFilterCriteria = (tasksToFilter, criteria) => {
+    let filtered = [...tasksToFilter];
+
+    // Применяем те же критерии фильтрации, как в TaskFilter.jsx
+    // Фильтр по родительской задаче
+    if (criteria.selectedParentTask) {
+      filtered = filtered.filter(
+        (task) => task.parent_task_id === criteria.selectedParentTask.task_id
+      );
+    }
+
+    // Фильтр по личным задачам
+    if (criteria.showOnlyPersonal) {
+      filtered = filtered.filter((task) => task.group_id === 0);
+    }
+
+    // Фильтр по задачам без дат
+    if (criteria.showOnlyTimeless) {
+      filtered = filtered.filter(
+        (task) =>
+          task.start_time === "0001-01-01T00:00:00Z" &&
+          task.end_time === "0001-01-01T00:00:00Z"
+      );
+    }
+
+    // Фильтр по категориям
+    if (criteria.selectedCategories.length > 0) {
+      filtered = filtered.filter((task) =>
+        criteria.selectedCategories.includes(task.category_id)
+      );
+    }
+
+    // Фильтр по группам
+    if (criteria.selectedGroups.length > 0) {
+      filtered = filtered.filter((task) =>
+        criteria.selectedGroups.includes(task.group_id)
+      );
+    }
+
+    // Фильтр по приоритетам
+    if (criteria.selectedPriorities.length > 0) {
+      filtered = filtered.filter((task) =>
+        criteria.selectedPriorities.includes(task.priority_id)
+      );
+    }
+
+    // Фильтр по диапазону дат
+    if (criteria.dateRange.start && criteria.dateRange.end) {
+      const startDate = new Date(criteria.dateRange.start);
+      const endDate = new Date(criteria.dateRange.end);
+
+      filtered = filtered.filter((task) => {
+        if (
+          task.start_time !== "0001-01-01T00:00:00Z" &&
+          task.end_time !== "0001-01-01T00:00:00Z"
+        ) {
+          const taskStartDate = new Date(task.start_time);
+          const taskEndDate = new Date(task.end_time);
+
+          return (
+            (taskStartDate >= startDate && taskStartDate <= endDate) ||
+            (taskEndDate >= startDate && taskEndDate <= endDate) ||
+            (taskStartDate <= startDate && taskEndDate >= endDate)
+          );
+        }
+        return true;
+      });
+    }
+
+    setFilteredTasks(filtered);
+  };
+
   // Watch for changes to the update flag
   useEffect(() => {
     if (localStorage.getItem("update") === "yes") {
@@ -54,6 +144,7 @@ export default function ListPage() {
 
   useEffect(() => {
     fetchTasks();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [updateFlag]);
 
   useEffect(() => {
@@ -133,6 +224,10 @@ export default function ListPage() {
     await fetchTasks();
   };
 
+  if (error) {
+    return <div>{error}</div>;
+  }
+
   return (
     <>
       <div className="tasks-container">
@@ -140,16 +235,26 @@ export default function ListPage() {
 
         <div className="header-list">
           <h3>Tasks</h3>
-          <button
-            className="action-btn add-subtask-btn"
-            onClick={() => setAddTask(true)}
-          >
-            <Plus size={16} />
-            Create task
-          </button>
+          <div className="btns">
+            <button
+              className="action-btn filter-btn"
+              onClick={() => setShowFilterModal(true)}
+            >
+              <Filter size={16} />
+              Filters
+            </button>
+            <button
+              className="action-btn add-subtask-btn"
+              onClick={() => setAddTask(true)}
+            >
+              <Plus size={16} />
+              Create task
+            </button>
+          </div>
         </div>
+
         <TaskList
-          tasks={tasks}
+          tasks={filteredTasks}
           isLoading={isLoading}
           error={error}
           onTaskSelect={handleTaskSelect}
@@ -215,6 +320,28 @@ export default function ListPage() {
             parentTaskId={parentTaskId}
             onClose={handleCloseCreateSubtaskFromDropDown}
             onSubtaskCreate={handleSubtaskCreatedFromDD}
+          />
+        )}
+
+        {/* Render TaskFilter modal */}
+        {showFilterModal && (
+          <TaskFilter
+            tasks={tasks}
+            onFilterChange={(filtered) => {
+              setFilteredTasks(filtered);
+              // Сохраняем последнюю функцию фильтрации
+              setLastAppliedFilter(() => (tasks) => {
+                // Воссоздаем условия фильтрации
+                // Это будет функция, которая фильтрует задачи так же, как последний примененный фильтр
+                return tasks.filter((task) => {
+                  return filtered.some(
+                    (filteredTask) => filteredTask.task_id === task.task_id
+                  );
+                });
+              });
+            }}
+            onClose={() => setShowFilterModal(false)}
+            flag={true}
           />
         )}
       </div>

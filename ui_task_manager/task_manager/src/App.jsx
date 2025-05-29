@@ -12,6 +12,8 @@ import CategoryPage from "./pages/CategoryPage";
 import GroupPage from "./pages/GroupPage";
 import BoardPage from "./pages/BoardPage";
 import CalendarPage from "./pages/Calendar";
+import { ProfilePage } from "./pages/Profile";
+import { AboutUs } from "./pages/AboutUs";
 
 function App() {
   return (
@@ -91,6 +93,30 @@ function App() {
             element={
               <ProtectedRoute>
                 <Admin />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="profile"
+            element={
+              <ProtectedRoute>
+                <ProfilePage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="analytics"
+            element={
+              <ProtectedRoute>
+                <Admin />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="about"
+            element={
+              <ProtectedRoute>
+                <AboutUs />
               </ProtectedRoute>
             }
           />
