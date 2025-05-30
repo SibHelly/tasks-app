@@ -14,6 +14,7 @@ import BoardPage from "./pages/BoardPage";
 import CalendarPage from "./pages/Calendar";
 import { ProfilePage } from "./pages/Profile";
 import { AboutUs } from "./pages/AboutUs";
+import AnalyticsPage from "./pages/AnalyticsPage";
 
 function App() {
   return (
@@ -108,7 +109,7 @@ function App() {
             path="analytics"
             element={
               <ProtectedRoute>
-                <Admin />
+                <AnalyticsPage />
               </ProtectedRoute>
             }
           />
