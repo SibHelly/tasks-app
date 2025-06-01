@@ -15,7 +15,7 @@ down:
 
 # Сборка всех сервисов
 build:
-	docker-compose build --no-cache frontend
+	docker-compose build
 
 # Пересборка и перезапуск всех сервисов (удобно после изменений в коде)
 rebuild: down build up
