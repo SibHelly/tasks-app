@@ -1,47 +1,45 @@
-# Build stage
+# Используем более легкий образ для сборки
 FROM node:18-alpine AS builder
 
-# Set working directory
 WORKDIR /app
 
-# Copy package files
-COPY package*.json ./
+# 1. Копируем только файлы, необходимые для установки зависимостей
+COPY package.json package-lock.json ./
 
-# Install dependencies
-RUN npm ci
+# 2. Устанавливаем зависимости с очисткой кэша
+RUN npm ci --omit=dev --legacy-peer-deps && \
+    npm cache clean --force
 
-# Copy source code
+# 3. Копируем исходный код
 COPY . .
 
-# Build the React application
+# 4. Сборка с ограничением памяти (важно для 1 ГБ RAM!)
+ENV NODE_OPTIONS="--max-old-space-size=512"
 RUN npm run build
 
-# Production stage
-FROM node:18-alpine AS production
+# 5. Финальный образ
+FROM node:18-alpine
 
-# Install serve globally
-RUN npm install -g serve
+# Устанавливаем serve без кэша
+RUN npm install -g serve@14.2.0 && \
+    npm cache clean --force
 
-# Create non-root user
+# Создаем non-root пользователя
 RUN addgroup -g 1001 -S reactgroup && \
     adduser -S reactuser -u 1001 -G reactgroup
 
-# Set working directory  
 WORKDIR /app
 
-# Copy built application from builder stage
-COPY --from=builder /app/build ./build
+# Копируем собранное приложение
+COPY --from=builder --chown=reactuser:reactgroup /app/build ./build
 
-# Change ownership to non-root user
-RUN chown -R reactuser:reactgroup /app
 USER reactuser
 
-# Expose port
 EXPOSE 3000
 
-# Health check
-HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-    CMD wget --no-verbose --tries=1 --spider http://localhost:3000 || exit 1
+# Оптимизированный healthcheck
+HEALTHCHECK --interval=30s --timeout=3s \
+    CMD curl -f http://localhost:3000 || exit 1
 
-# Start the React application
-CMD ["serve", "-s", "build", "-l", "3000"]
+# Запуск с более безопасными параметрами
+CMD ["serve", "-s", "build", "-l", "3000", "--no-port-switching"]
